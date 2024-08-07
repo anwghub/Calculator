@@ -77,9 +77,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             child: Center(
                 child: Text(
               value,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ))),
       ),
     );
@@ -87,7 +85,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
   /////
   void onBtnTap(String value) {
-
     if (value == Btn.del) {
       delete();
       return;
