@@ -17,43 +17,45 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      body: Column(
-        children: [
-          //output
-          Expanded(
-            child: SingleChildScrollView(
-              reverse: true,
-              child: Container(
-                alignment: Alignment.bottomRight,
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  "$number1$operand$number2".isEmpty
-                      ? "0"
-                      : "$number1$operand$number2",
-                  style: const TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
+      body: SafeArea(
+        child: Column(
+          children: [
+            //output
+            Expanded(
+              child: SingleChildScrollView(
+                reverse: true,
+                child: Container(
+                  alignment: Alignment.bottomRight,
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    "$number1$operand$number2".isEmpty
+                        ? "0"
+                        : "$number1$operand$number2",
+                    style: const TextStyle(
+                      fontSize: 48,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.end,
                   ),
-                  textAlign: TextAlign.end,
                 ),
               ),
             ),
-          ),
 
-          //buttons
-          Wrap(
-            children: Btn.buttonValues
-                .map(
-                  (value) => SizedBox(
-                      width: value == Btn.n0
-                          ? screenSize.width / 2
-                          : (screenSize.width / 4),
-                      height: screenSize.width / 5,
-                      child: buildButton(value)),
-                )
-                .toList(),
-          )
-        ],
+            //buttons
+            Wrap(
+              children: Btn.buttonValues
+                  .map(
+                    (value) => SizedBox(
+                        width: value == Btn.n0
+                            ? screenSize.width / 2
+                            : (screenSize.width / 4),
+                        height: screenSize.width / 5,
+                        child: buildButton(value)),
+                  )
+                  .toList(),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -75,7 +77,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             child: Center(
                 child: Text(
               value,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24),
             ))),
       ),
     );
@@ -83,7 +87,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
   /////
   void onBtnTap(String value) {
-    appendValue(value);
+
     if (value == Btn.del) {
       delete();
       return;
@@ -103,6 +107,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       calculate();
       return;
     }
+
+    appendValue(value);
   }
 
   ///
@@ -217,8 +223,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   }
 
 ////
-  getBtnColor(value) {
-    [Btn.del, Btn.clr].contains(value)
+  Color getBtnColor(value) {
+    return [Btn.del, Btn.clr].contains(value)
         ? Colors.blueGrey
         : [
             Btn.per,
@@ -228,7 +234,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             Btn.divide,
             Btn.calculate
           ].contains(value)
-            ? Color.fromARGB(255, 174, 13, 222)
+            ? Colors.deepPurple
             : Colors.black87;
   }
 }
