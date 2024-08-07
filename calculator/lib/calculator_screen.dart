@@ -71,7 +71,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           borderRadius: BorderRadius.circular(100),
         ),
         child: InkWell(
-            onTap: () {},
+            onTap: () => onBtnTap(value),
             child: Center(
                 child: Text(
               value,
@@ -79,6 +79,27 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ))),
       ),
     );
+  }
+
+  /////
+  void onBtnTap(String value) {
+    if (value != Btn.dot && int.tryParse(value) == null) {
+      if (operand.isNotEmpty && number2.isNotEmpty) {}
+      operand = value;
+    } else if (number1.isEmpty || operand.isEmpty) {
+      if (value == Btn.dot && number1.contains(Btn.dot)) return;
+      if (value == Btn.dot && (number1.isEmpty || number1 == Btn.n0)) {
+        value = "0.";
+      }
+      number1 += value;
+    } else if (number2.isEmpty || operand.isNotEmpty) {
+      if (value == Btn.dot && number2.contains(Btn.dot)) return;
+      if (value == Btn.dot && (number2.isEmpty || number2 == Btn.n0)) {
+        value = "0.";
+      }
+      number2 += value;
+    }
+    setState(() {});
   }
 
   getBtnColor(value) {
